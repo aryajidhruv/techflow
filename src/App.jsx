@@ -46,7 +46,7 @@ function App() {
   <div className=' m-4 w-8xl'>
     
     {/* class="headercontent" */}
-   <header className=' px-0 py-6 max-w-7xl mx-auto flex gap-85 items-center' >
+   <header className=' px-6 py-6 max-w-7xl mx-auto flex justify-between items-center' >
 
        <a href="#logo" className='flex gap-1.3'>
            <img src="StudySyn.svg" alt="logoimage" className='h-8 w-[1.938rem]' />
@@ -55,7 +55,7 @@ function App() {
            </span>
        </a>
 
-       <nav className='flex gap-5.5 text-(--text-color) font-bold   ' >
+       <nav className='hidden md:flex  gap-5.5 text-(--text-color) font-bold   ' >
 
            <a href="#home" className='hover:text-indigo-600 group relative cursor-pointer' >Home
            </a>
@@ -189,13 +189,13 @@ function App() {
 
        </nav>
       
-       <div className=''>
-       <a href="#contact" className=' px-6 py-3 text-[1rem] font-semibold rounded-lg bg-indigo-400 text-white' >
+       <div className='flex items-center gap-4'>
+       <a href="#contact" className='hidden sm:block px-6 py-3 text-[1rem] font-semibold rounded-lg bg-indigo-400 text-white' >
            Contact Us
        </a>
 
-       <button class="menubutton">
-           <img src="Hamburger.svg" alt="menubutton" class="menuicon"/>
+       <button className='sh-20 block md:hidden p-2 rounded-lg'>
+           <img src="Hamburger.svg" alt="menubutton" className='w-8 h-8'/>
        </button>
        </div>
       
@@ -206,18 +206,18 @@ function App() {
    
 </div>
 
+{/* mainn container */}
+   
+   <div className='  px-4 m-3 flex w-8xl flex-col lg:flex-row mx-auto gap-10'>
+
 
    
-   <div className='  px-4 m-3 flex w-8xl'>
-
-
-   
-       <div className='py-18 px-12 text-left '>
+       <div className='py-10 lg:py-18 px-6 lg:px-12 text-center lg:text-left '>
            <p className='text-1.8xl font-semibold text-(--primary-color)  '>Very proud to introduce</p>
-           <h1 className=' text-[3rem] font-bold text-(--text-color)'>Seamless Learning for Brighter Futures</h1>
-           <p className='text-(--dark-gray) text-[1.121rem] text-left'>Our innovative platform offers an effortless and seamless approach to learning, empowering students of all ages to achieve brighter futures. Join us on a transformative journey to simplify education and unlock your full potential.
+           <h1 className='  font-bold text-(--text-color) md:text-5xl lg:text-[3rem]'>Seamless Learning for Brighter Futures</h1>
+           <p className='text-(--dark-gray) text-base md:text-lg mt-4'>Our innovative platform offers an effortless and seamless approach to learning, empowering students of all ages to achieve brighter futures. Join us on a transformative journey to simplify education and unlock your full potential.
            </p>
-           <div className='flex gap-6 p-4 mt-4 text-white'>
+           <div className='flex justify-center lg:justify-start gap-6 p-4 mt-4 text-white'>
                <a href="#start" className=' rounded-md px-4 py-3 text-[1rem] font-semibold bg-[#5254f8] '>Start Now</a>
                <a href="#tour" className=' rounded-md px-4 py-3 text-[1rem] font-semibold bg-(--dark-gray)'>Take Tour</a>
            </div>
@@ -226,15 +226,15 @@ function App() {
 
 
 
-{/* pdf code */}
-       <div className='p-2 flex justify-center items-center  bg-gray-200 rounded-3xl'>
+{/* pdf section */}
+       <div className='p-2 flex justify-center items-center  bg-gray-200 rounded-3xl w-full lg:w-1/2  '>
            <div className='flex flex-col justify-start p-4'>
            <button className=' w-24 flex justify-center rounded-2xl mb-2 font-semibold text-white bg-gray-500 hover:text-gray-950' onClick={()=> setShowPdf(true)} > Content</button>
 
            {/* this container now uses reaxt-pdf t */}
 
-           {showPdf&&( <div className='  overflow-y-auto   bg-white '>
-              <iframe src="/Earth.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title='PDF Document ' frameborder="0" className='h-120 w-132  r ' ></iframe>
+           {showPdf&&( <div className='w-full  overflow-hidden  bg-white rounded-xl shadow-inner '>
+              <iframe src="/Earth.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title='PDF Document ' frameborder="0" className='lg:h-120 lg:w-132 w-full md:h-125  r ' ></iframe>
            </div>)}
            </div>
 
@@ -259,13 +259,8 @@ function App() {
   {/* company section */}
   <div className='flex items-center flex-col '>
         <h2 className='m-7 text-5xl font-bold'>Trusted by the best</h2>
-{/* font-size: 1rem;
-    font-weight: 500;
-    color: var(--gray);
-    display: flex;
-    gap: 0.5rem;
- */}
-        <div className='flex gap-[3.6rem] py-[1.8rem] px-10 bg-(--light-gray) rounded-[0.625rem] m-8'>
+
+        <div className='flex flex-col lg:flex-row gap-6  md:gap-[3.6rem] py-8 px-6 bg-(--light-gray) rounded-[0.625rem] m-4 md:flex-col md:m-8'>
             <div className='flex gap-2'>
                 <img src="Google.svg" alt="" className='h-[1.56rem]'/>
                 <span className='text-[1rem] font-medium text-(--gray)'>Google</span>
@@ -295,98 +290,109 @@ function App() {
 
 
 
-<div  className='text-center py-10 bg-(--light-gray)'>
+<div  className='text-center py-10 bg-(--light-gray) w-full px-6 flex'>
         <div className='w-200 mx-auto px-8 py-0 '>
-            <div className='flex flex-col gap-4'>
-                <h2 className='text-[2.5rem] font-bold'>
+            <div className='flex flex-col gap-4 mb-10'>
+                <h2 className='text-3xl md:text-[2.5rem] font-bold'>
                     Our competitive advantage
                 </h2>
-                <p className='text-(--gray) text-[1rem]'>
+                <p className='text-(--gray) text-[1rem] max-w-2xl mx-auto'>
                     This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of real written text but is random or otherwise generated.
                 </p>
             </div>
             
-            <div className='grid gap-8 grid-cols-2 mt-[1.3rem]'>
+            <div className='grid gap-8  grid-cols-1 md:grid-col-2 lg:grid-cols-2 mt-[1.3rem]
+            w-full bg-gray'>
               
                 {/* <!-- card 1 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#4a90e2] rounded-2xl'>
-                    <div className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
+                <div className='lg:g-4 lg:p-8 md:p-8 r-4 flex flex-col items-center bg-[#4a90e2] rounded-2xl  mt-[1.3rem] lg:h-72 max-w-6xl md:h-72 md:w-72 h-72 w-72 md:justify-between md:items-center '>
+
+                    <div className='flex items-center justify-center bg-(--background-color) h-16 w-16 mb-6 shadow-sm rounded-[50%]'>
                         <img className='w-6 h-6' src="PersonalizedLearn (1).svg"/>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div  className='font-bold text-[1.3rem] text-white mt-2'>
-                            Personalized Learning
-                        </div>
-                        <div className='text-white'>
-                            Offer tailored learning experiences through AI and machine learning to cater to individual student needs.
-                        </div>
+                        
+                        <p   className='font-bold text-[1.3rem] text-white lg:mt-2 p-1'>Personalized Learning</p>
+
+                        <p className='text-white text-[1rem] leading-relaxed opacity-90'>Offer tailored learning experiences through AI and machine learning to cater to individual student needs.</p>
+                       
                     </div>
                 </div>
                 {/* <!-- card 2 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#FF6289] rounded-2xl'>
+                <div className=' lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#FF6289] rounded-2xl lg:h-72 
+                md:h-72 md:w-72 h-72 w-72'>
                     <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
                         <img className='w-6 h-6' src="Affordability.svg"/>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div  className='font-bold text-[1.3rem] text-white mt-2'>
-                            Affordability
-                        </div>
-                        <div className='text-white'>
-                            Provide high-quality education at an affordable price point, making it accessible to a broader audience.
-                        </div>
+                        <p className='font-bold text-[1.3rem] text-white mt-2'>Affordability</p>
+
+                        <p className='text-white'>
+                        Provide high-quality education at an affordable price point, making it accessible to a broader audience.
+
+                        </p>
+                       
                     </div>
                 </div>
                 {/* <!-- card 3 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#fcbf58] rounded-2xl'>
+                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#fcbf58] rounded-2xl *:md:h-72 md:w-72 h-72 w-72'>
                     <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
                         <img className='w-6 h-6' src="IndustryPatner.svg"/>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='font-bold text-[1.3rem] text-white mt-2'>
-                            Industry Partnerships
-                        </div>
-                        <div className='text-white'>
-                            Collaborate with well-known companies and institutions to offer accredited courses and certifications, adding credibility to your offerings.
-                        </div>
+                        <p  className='font-bold text-[1.3rem] text-white mt-2'>
+                        Industry Partnerships
+                        </p>
+                        <p  className='text-white'> Collaborate with well-known companies and institutions to offer accredited courses and certifications, adding credibility to your offerings.</p>
+                        
                     </div>
                 </div>
                 {/* <!-- card 4 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#44bfc3] rounded-2xl'>
+                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#44bfc3] rounded-2xl
+                md:h-72 md:w-72 h-72 w-72'>
                     <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
                         <img className='w-6 h-6' src="InnovativeTech.svg"/>
                     </div>
                     <div className='flex flex-col gap-4=2'>
-                        <div className='font-bold text-[1.3rem] text-white mt-2'>
-                            Innovative Technology
-                        </div>
-                        <div  className='text-white'>
-                            Utilize cutting-edge technology, such as augmented reality or virtual reality, to create immersive learning experiences.
-                        </div>
+                        <p className='font-bold text-[1.3rem] text-white mt-2'> 
+                        Innovative Technology
+                        </p>
+
+                        <p className='text-white'> Utilize cutting-edge technology, such as augmented reality or virtual reality, to create immersive learning experiences.</p>
+                       
                     </div>
                 </div>
                 {/* <!-- card 5 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#77b05d] rounded-2xl'>
+                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#77b05d] rounded-2xl
+                md:h-72 md:w-72 h-72 w-72'>
                     <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
                         <img className='w-6 h-6' src="InnovativeTech.svg"/>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div  className='font-bold text-[1.3rem] text-white mt-2'>
-                            Responsive Support
-                        </div>
-                        <div  className='text-white'>
-                            Provide exceptional customer support and assistance to students and educators.
-                        </div>
+                        <p className='font-bold text-[1.3rem] text-white mt-2'>
+                        Responsive Support
+                        </p>
+
+                        <p className='text-white'>
+                        Provide exceptional customer support and assistance to students and educators.
+                        </p>
+                       
+                        
                     </div>
                 </div>
                 {/* <!-- card 6 --> */}
-                <div className='g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#7d78b1] rounded-2xl'>
+                <div className='lg:g-4 lg:p-8 md:p-6  r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#7d78b1] rounded-2xl md:h-72 md:w-72 h-72 w-72
+                '>
                     <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
                         <img className='w-6 h-6' src="Analytics.svg"/>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <div className='font-bold text-[1.3rem] text-white mt-2'>
-                            Analytics and Insights
-                        </div>
+                        <p className='font-bold text-[1.3rem] text-white mt-2'> Analytics and Insights</p>
+
+                        <p className='text-white'>
+                        Offer detailed progress tracking and analytics to help students and teachers monitor performance and make data-driven decisions
+                        </p>
+                        
                         <div className='text-white'>
                             Offer detailed progress tracking and analytics to help students and teachers monitor performance and make data-driven decisions.
                         </div>
@@ -411,7 +417,7 @@ function App() {
       </p>
 
       {/* Company Grid */}
-      <div className='grid grid-cols-5 pl-20 mt-15'>
+      <div className='grid md:grid-cols-3 grid-cols-1 lg:grid-cols-5 pl-20 mt-15'>
         {logos.map((logo, index) => (
           <img 
             key={index}
@@ -428,7 +434,7 @@ function App() {
         Compatible with
       </p>
 
-      <div className='grid grid-cols-3 w-190 pl-20 mt-8 justify-center'>
+      <div className='grid grid-cols-1  lg:grid-cols-3 lg:w-190 lg: pl-20  lg:mt-8 justify-center'>
         {["i16.webp", "i17.webp", "i18.webp"].map((img, i) => (
           <img 
             key={i}
@@ -449,21 +455,21 @@ function App() {
 
 <div className='h-300 bg-gray-100  '>
 
-    <p className='font-semibold text-4xl px-154 my-3 pt-6 mask-radial-from-neutral-950 '>Review</p>
+    <p className='font-semibold lg:text-4xl lg:px-154 lg:my-3 lg:pt-6 mask-radial-from-neutral-950 items-center flex justify-center'>Review</p>
    
-   <div className='items-center space-y-1 mt-10 '>
-   <p className='items-center text-2xl text-indigo-900 font-bold px-120'>Join 100,000+ users from across the globe</p>
+   <div className='items-center lg:space-y-1 lg:mt-10 flex flex-col '>
+   <p className='items-center text-2xl text-indigo-900 font-bold lg:px-120'>Join 100,000+ users from across the globe</p>
 
-<p className='text-2xl text-indigo-900 font-bold px-110'>who improve their knowledge and productivity with</p>
-<p className='text-3xl text-indigo-900 font-bold px-160'>TechFLow</p>
+<p className='text-2xl text-indigo-900 font-bold lg:px-110'>who improve their knowledge and productivity with</p>
+<p className='text-3xl text-indigo-900 font-bold lg:px-160'>TechFLow</p>
 
    </div>
 
    
 {/* review photo section */}
-   <div className='grid grid-cols-3  p-10 h-250 '>
+   <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 lg:h-250 gap-10'>
     {/* card1 */}
-    <div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl'>
+    <div className='bg-white pb-1 h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="gary.webp" alt="" className='h-15' />
@@ -487,7 +493,7 @@ function App() {
 
 {/* card2 */}
 
-<div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl '>
+<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="r2.webp" alt="not found" className='h-15' />
@@ -513,7 +519,7 @@ function App() {
 
 
 {/* card3 */}
-<div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl'>
+<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="r3.webp" alt="" className='h-15' />
@@ -537,7 +543,7 @@ function App() {
 
 
 {/* card4 */}
-<div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl'>
+<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="r4.webp" alt="" className='h-15' />
@@ -565,7 +571,7 @@ function App() {
 
 
 {/* card5 */}
-<div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl'>
+<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="r5.webp" alt="" className='h-15' />
@@ -592,7 +598,7 @@ function App() {
 
 
 {/* card6 */}
-<div className='bg-white h-100 w-95  p-5 ml-5 rounded-4xl shadow-2xl'>
+<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
         <div className='flex justify-between p-5'>
         <div className='flex gap-4 items-center'>
             <img src="r6.webp" alt="" className='h-15' />
