@@ -9,6 +9,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 function App() {
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     // for pdf 
     const[showPdf,setShowPdf]=useState(true);
 
@@ -189,15 +191,27 @@ function App() {
 
        </nav>
       
-       <div className='flex items-center gap-4'>
-       <a href="#contact" className='hidden sm:block px-6 py-3 text-[1rem] font-semibold rounded-lg bg-indigo-400 text-white' >
-           Contact Us
-       </a>
+       {/* Add this Mobile Menu Overlay */}
+{isMenuOpen && (
+  <div className='fixed inset-0 bg-white z-50 flex flex-col items-center justify-center gap-8 md:hidden'>
+      {/* Close button inside the menu */}
+      <button 
+        className='absolute top-6 right-6 p-2' 
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <img src="CloseIcon.svg" className='w-8 h-8' alt="close" />
+      </button>
 
-       <button className='sh-20 block md:hidden p-2 rounded-lg'>
-           <img src="Hamburger.svg" alt="menubutton" className='w-8 h-8'/>
-       </button>
-       </div>
+      {/* Navigation Links */}
+      <nav className='flex flex-col items-center gap-6 text-xl font-bold'>
+          <a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a>
+          <a href="#Features" onClick={() => setIsMenuOpen(false)}>Features</a>
+          <a href="#pricing" onClick={() => setIsMenuOpen(false)}>Pricing</a>
+          <a href="#About" onClick={() => setIsMenuOpen(false)}>About</a>
+          <a href="#contact" className='bg-indigo-400 text-white px-8 py-3 rounded-lg' onClick={() => setIsMenuOpen(false)}>Contact Us</a>
+      </nav>
+  </div>
+)}
       
 
 
@@ -301,7 +315,7 @@ function App() {
                 </p>
             </div>
             
-            <div className='grid gap-8  grid-cols-1 md:grid-col-2 lg:grid-cols-2 mt-[1.3rem]
+            <div className='grid gap-8  grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-[1.3rem]
             w-full bg-gray'>
               
                 {/* <!-- card 1 --> */}
