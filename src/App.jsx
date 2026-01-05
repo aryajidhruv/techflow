@@ -1,27 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
-import { useRef } from 'react';
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Import your existing components
 import AiNotes from './AiNotes';
 import SignUp from './Signup';
 import Login from './Login';
+import Pricing from './Pricing';
+import Blog from './Blog';
+import About from './About';
 
-import{ BrowserRouter as Router, Routes ,Route ,Link} from 'react-router-dom';
-
-
-const LandingPage = ()=> {
-
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    // for pdf 
-    const[showPdf,setShowPdf]=useState(true);
-
-    // for companysection 
-    const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = useRef(null);
+const LandingPage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showPdf, setShowPdf] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,14 +22,20 @@ const LandingPage = ()=> {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 } // Triggers when 10% of the section is visible
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    
+    // Safety fallback: if user doesn't scroll, show logos anyway after 2 seconds
+    const timer = setTimeout(() => setIsVisible(true), 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 
-  // List of images to avoid repeating code
   const logos = [
     { src: "i2.webp", p: "" }, { src: "i1.webp", p: "" }, { src: "i3.webp", p: "" },
     { src: "i4.webp", p: "" }, { src: "i5.webp", p: "" }, { src: "i6.webp", p: "" },
@@ -45,675 +43,183 @@ const LandingPage = ()=> {
     { src: "i10.webp", p: "" }, { src: "i11.svg", p: "p-2" }, { src: "i12.webp", p: "p-1.5" },
     { src: "i13.webp", p: "" }, { src: "i14.webp", p: "p-0.5" }, { src: "i15.webp", p: "p-3" }
   ];
-  
- 
+
   return (
-    <> 
-  <div className='bg-white  relative ' >
-  <div className=' m-4 w-8xl'>
-    
-    {/* class="headercontent" */}
-   <header className=' px-6 py-6 max-w-7xl mx-auto flex justify-between items-center' >
+    <div className='bg-white font-sans selection:bg-indigo-100 overflow-x-hidden'>
+      
+      {/* --- HEADER --- */}
+      <header className='px-6 py-8 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur-md z-[100] border-b border-slate-50'>
+        <Link to="/" className='flex items-center gap-2'>
+          <img src="StudySyn.svg" alt="logo" className='h-9 w-auto' />
+          <span className='text-2xl font-black tracking-tighter text-slate-900'>TechFlow</span>
+        </Link>
 
-       <a href="#logo" className='flex gap-1.3'>
-           <img src="StudySyn.svg" alt="logoimage" className='h-8 w-[1.938rem]' />
-           <span className='text-[1.3rem] font-bold'>
-           TechFlow
-           </span>
-       </a>
+        <nav className='hidden md:flex gap-8 items-center font-bold'>
+          <Link to="/" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Home</Link>
+          <Link to="/pricing" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Pricing</Link>
+          <Link to="/blog" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Blog</Link>
+          <Link to="/about" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>About</Link>
+        </nav>
 
-       <nav className='hidden md:flex  gap-5.5 text-(--text-color) font-bold   ' >
+        <div className='flex items-center gap-4'>
+          <Link to="/login" className='hidden sm:block text-sm font-bold text-slate-600 hover:text-slate-900'>Log In</Link>
+          <Link to="/signup" className='px-6 py-3 bg-[#5254f8] text-white text-sm font-black rounded-full shadow-lg hover:scale-105 transition-all uppercase tracking-widest'>
+            Sign Up
+          </Link>
+          <button className='md:hidden' onClick={() => setIsMenuOpen(true)}>
+            <img src="Hamburger.svg" alt="menu" className='w-8 h-8' />
+          </button>
+        </div>
+      </header>
 
-           <a href="#home" className='hover:text-indigo-600 group relative cursor-pointer' >Home
-           </a>
-           
-           {/* features */}
-           <a href="#Fetures " className='hover:text-indigo-600 group relative cursor-pointer grid-cols-2 ' >Fetures
-            
-            <div className='absolute hidden  -translate-x-1/3 transform top-full   group-hover:grid grid-cols-2 gap-4 w-100 p-6    rounded-2xl bg-white
-            
-            
-            '>
-                {/* ai notees */}
-
-            <Link to="/ai-notes" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
-            <h4 className="text-indigo-800 font-bold text-m">AI Notes</h4>
-            <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Automatically turn your lectures into easy-to-follow notes.</p>
-            
+      {/* --- HERO SECTION --- */}
+      <section className='max-w-[1440px] mx-auto px-6 pt-20 pb-32 flex flex-col lg:flex-row items-center gap-16'>
+        <div className='lg:w-1/2 text-center lg:text-left'>
+          <p className='inline-block px-4 py-2 bg-indigo-50 text-[#5254f8] text-xs font-black uppercase tracking-[0.2em] rounded-full mb-6'>Very proud to introduce</p>
+          <h1 className='text-5xl md:text-7xl lg:text-[5.5rem] font-black text-slate-900 leading-[0.9] tracking-tighter mb-8'>
+            Seamless Learning for <span className='text-[#5254f8]'>Brighter</span> Futures
+          </h1>
+          <p className='text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mb-10'>
+            Our innovative platform offers an effortless and seamless approach to learning, empowering students of all ages to achieve mastery.
+          </p>
+          <div className='flex flex-wrap justify-center lg:justify-start gap-4'>
+            <Link to="/signup" className='px-10 py-5 bg-[#5254f8] text-white text-lg font-black rounded-2xl shadow-xl hover:bg-indigo-700 transition-all'>
+              Start Now
             </Link>
+            <button className='px-10 py-5 bg-slate-800 text-white text-lg font-black rounded-2xl shadow-xl hover:bg-black transition-all'>
+              Take Tour
+            </button>
+          </div>
+        </div>
 
-            {/* ai tutor */}
-
-            <Link to="/ai-tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">AI Tutor</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Instantly get clear answers from your study content.</p>
-      </Link>
-
-
-      {/* ai quiz */}
-
-      <Link to='/ai-quiz' className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">AI Quizzes</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Quickly generate quizzes from your materials to test understanding.</p>
-      </Link>
-
-      {/* ai flashcards */}
-
-      <Link to="/ai-flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">AI Flashcards</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Create personalized flashcards automatically to memorize faster.</p>
-      </Link>
-
+        <div className='lg:w-1/2 w-full'>
+          <div className='p-2 bg-slate-100 rounded-[3rem] shadow-inner'>
+            <div className='bg-white rounded-[2.5rem] overflow-hidden shadow-2xl h-[500px] border border-white'>
+              {showPdf && (
+                <iframe src="/Earth.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" className='w-full h-full' title='Study Preview' />
+              )}
             </div>
-           </a>
+          </div>
+        </div>
+      </section>
 
-           {/* pricing */}
-           <a href="#pricing" className='hover:text-indigo-600 group relative cursor-pointer grid-cols-2 ' >Pricing
-           <div className='absolute hidden  -translate-x-1/3 transform top-full   group-hover:grid grid-cols-2 gap-4 w-100 p-6    rounded-2xl bg-white
-            
-            
-            '>
-
-            <a href="#pro" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
-            <h4 className="text-indigo-800 font-bold text-m">free starter</h4>
-            <p className="text-(--dark-gray) text-s font-normal leading-relaxed">5 AI uploads per month. Perfect for trying out AI notes and quizzes.</p>
-            </a>
-
-            <a href="#tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Study Pro</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Unlimited uploads, 24/7 AI Tutor access, and priority processing.</p>
-      </a>
-
-      <a href="#quizzes" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Scholar</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">25 AI uploads per month, advanced PDF analysis, and custom study schedules to keep you on track.</p>
-      </a>
-
-      <a href="#flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Ultimate</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Everything in Pro, plus collaborative study rooms, full citation management, and unlimited mock exam generation</p>
-      </a>
-
-            </div>
-                    
-           </a>
-
-           {/* blog */}
-           <a href="#Blog" className='hover:text-indigo-600 group relative cursor-pointer grid-cols-2 ' >Blog
-
-           <div className='absolute hidden  -translate-x-1/3 transform top-full   group-hover:grid grid-cols-2 gap-4 w-100 p-6    rounded-2xl bg-white
-            
-            
-            '>
-
-            <a href="#pro" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
-            <h4 className="text-indigo-800 font-bold text-m">AI Study</h4>
-            <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Step-by-step guides on turning messy lecture audio into perfect, structured study notes.</p>
-            </a>
-
-            <a href="#tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">The Flow Method</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Science-backed tips on deep work, time-blocking, and how to beat exam season burnout.</p>
-      </a>
-
-      <a href="#quizzes" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">What's New?</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Stay ahead with the latest feature releases, from new AI models to mobile app improvements.</p>
-      </a>
-
-      <a href="#flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Student Stories</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Real-world examples of how students are using StudyFlow to save 10+ hours of study time every week.</p>
-      </a>
-
-            </div>
-
-
-            
-            
-            
-           </a>
-           {/* about */}
-           <a href="#About" className= 'hover:text-indigo-600 group relative cursor-pointer grid-cols-2 '>About
-           <div className='absolute hidden  -translate-x-1/3 transform top-full   group-hover:grid grid-cols-2 gap-4 w-100 p-6    rounded-2xl bg-white
-            
-            
-            '>
-
-            <a href="#pro" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
-            <h4 className="text-indigo-800 font-bold text-m">Our Core Purpose</h4>
-            <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Bridging the gap between lecture hall confusion and academic mastery through ethical AI integration.</p>
-            </a>
-
-            <a href="#tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">The Flow Engine</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">A deep dive into how our proprietary AI models process complex academic data with 99% accuracy.</p>
-      </a>
-
-      <a href="#quizzes" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Built by Students</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Founded by a group of graduates who wanted to solve the "information overload" problem for the next generation..</p>
-      </a>
-
-      <a href="#flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
-        <h4 className="text-indigo-800  font-bold text-m">Data & Privacy</h4>
-        <p className="text-(--dark-gray) text-s font-normal ">Your study materials are your own. We use enterprise-grade encryption to keep your academic data private and secure.</p>
-      </a>
-
-            </div>
-           </a>
-
-       </nav>
-      
-       <div className='flex items-center gap-4'>
-    
-       
-       <div className='flex items-center gap-4'>
-    {/* Contact Us - Hidden on very small screens */}
-    <a href="#contact" className='hidden sm:block px-6 py-3 text-[1rem] font-semibold rounded-lg bg-indigo-400 text-white'>
-        Contact Us
-    </a>
-
-    {/* THE MISSING HAMBURGER BUTTON */}
-    <button 
-        className='block md:hidden p-2 rounded-lg' 
-        onClick={() => setIsMenuOpen(true)} // This opens the menu
-    >
-        <img 
-            src="Hamburger.svg" 
-            alt="open menu" 
-            className='w-8 h-8'
-        />
-    </button>
-</div>
-       
-
-         {isMenuOpen && (
-  
-            <div className='fixed inset-0 bg-white z-50 flex flex-col items-center justify-center gap-8 md:hidden'>
-        {/* Close button inside the menu */}
-        <button 
-          className='absolute top-6 right-6 p-2' 
-         onClick={() => setIsMenuOpen(false)}
-                         >
-         <img src="close.webp" className='w-8 h-8' alt="close" />
-        </button>
-
-      {/* Navigation Links */}
-        <nav className='flex flex-col items-center gap-6 text-xl font-bold'>
-          <a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a>
-          <a href="#Features" onClick={() => setIsMenuOpen(false)}>Features</a>
-          <a href="#pricing" onClick={() => setIsMenuOpen(false)}>Pricing</a>
-          <a href="#About" onClick={() => setIsMenuOpen(false)}>About</a>
-          <a href="#contact" className='bg-indigo-400 text-white px-8 py-3 rounded-lg' onClick={() => setIsMenuOpen(false)}>Contact Us</a>
-      </nav>
-  </div> )}
-       
-
-       </div>
-      
-
-
-   </header>
-
-   
-</div>
-
-{/* mainn container */}
-   
-   <div className='  px-4 m-3 flex w-8xl flex-col lg:flex-row mx-auto gap-10'>
-
-
-   
-       <div className='py-10 lg:py-18 px-6 lg:px-12 text-center lg:text-left '>
-           <p className='text-1.8xl font-semibold text-(--primary-color)  '>Very proud to introduce</p>
-           <h1 className='  font-bold text-(--text-color) md:text-5xl lg:text-[3rem]'>Seamless Learning for Brighter Futures</h1>
-           <p className='text-(--dark-gray) text-base md:text-lg mt-4'>Our innovative platform offers an effortless and seamless approach to learning, empowering students of all ages to achieve brighter futures. Join us on a transformative journey to simplify education and unlock your full potential.
-           </p>
-           <div className='flex justify-center lg:justify-start gap-6 p-4 mt-4 text-white'>
-               <a href="#start" className=' rounded-md px-4 py-3 text-[1rem] font-semibold bg-[#5254f8] '>Start Now</a>
-               <a href="#tour" className=' rounded-md px-4 py-3 text-[1rem] font-semibold bg-(--dark-gray)'>Take Tour</a>
-           </div>
-       </div>
-
-
-
-
-{/* pdf section */}
-       <div className='p-2 flex justify-center items-center  bg-gray-200 rounded-3xl w-full lg:w-1/2  '>
-           <div className='flex flex-col justify-start p-4'>
-           <button className=' w-24 flex justify-center rounded-2xl mb-2 font-semibold text-white bg-gray-500 hover:text-gray-950' onClick={()=> setShowPdf(true)} > Content</button>
-
-           {/* this container now uses reaxt-pdf t */}
-
-           {showPdf&&( <div className='w-full  overflow-hidden  bg-white rounded-xl shadow-inner '>
-              <iframe src="/Earth.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" title='PDF Document ' frameborder="0" className='lg:h-120 lg:w-132 w-full md:h-125  r ' ></iframe>
-           </div>)}
-           </div>
-
-
-           {/* 2nd button */}
-
+      {/* --- COMPETITIVE ADVANTAGE GRID --- */}
+      <section className='py-32 bg-slate-50'>
+        <div className='max-w-7xl mx-auto px-6 text-center'>
+          <h2 className='text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-6'>Our competitive advantage</h2>
+          <p className='text-slate-500 font-medium text-lg max-w-2xl mx-auto mb-20'>Tailored learning experiences through AI to cater to individual student needs.</p>
           
-                
-            
-           
-
-
-           
-       </div>
-   
-</div>
-  </div>
-
-
-  
-
-  {/* company section */}
-  <div className='flex items-center flex-col '>
-        <h2 className='m-7 text-5xl font-bold'>Trusted by the best</h2>
-
-        <div className='flex flex-col lg:flex-row gap-6  md:gap-[3.6rem] py-8 px-6 bg-(--light-gray) rounded-[0.625rem] m-4 md:flex-col md:m-8'>
-            <div className='flex gap-2'>
-                <img src="Google.svg" alt="" className='h-[1.56rem]'/>
-                <span className='text-[1rem] font-medium text-(--gray)'>Google</span>
-            </div>
-
-            <div className='flex gap-2'>
-                <img src="Microsoft.svg" alt="" className='h-[1.56rem]'/>
-                <span className='text-[1rem] font-medium text-(--gray)'>Microsoft</span>
-            </div>
-
-            <div className='flex gap-2'>
-                <img src="linkedin-copy.svg" alt="" className='h-[1.56rem]'/>
-                <span className='text-[1rem] font-medium text-(--gray)'>Linkedin</span>
-            </div>
-
-            <div className='flex gap-2'>
-                <img src="VectorEdu.svg" alt="" className='h-[1.56rem]'/>
-                <span className='text-[1rem] font-medium text-(--gray)'>Vector</span>
-            </div>
-        </div>
-
-    </div>
-
-{/* feature container */}
-  
-
-
-
-
-<div  className='text-center py-10 bg-(--light-gray) w-full px-6 flex justify-center'>
-        <div className='w-200 mx-auto px-8 py-0 flex flex-col justify-center '>
-            <div className='flex flex-col gap-4 mb-10'>
-                <h2 className='text-3xl md:text-[2.5rem] font-bold'>
-                    Our competitive advantage
-                </h2>
-                <p className='text-(--gray) text-[1rem] max-w-2xl mx-auto'>
-                    This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of real written text but is random or otherwise generated.
-                </p>
-            </div>
-            
-            <div className='grid gap-8  grid-cols-1 md:grid-col-2 lg:grid-cols-2 mt-[1.3rem]
-            w-full bg-gray md:justify-center items-center justify-items-center'>
-              
-                {/* <!-- card 1 --> */}
-                <div className='lg:g-4 lg:p-8 md:p-8 r-4 flex flex-col items-center bg-[#4a90e2] rounded-2xl  mt-[1.3rem] lg:h-72 max-w-6xl md:h-72 md:w-72 h-72 w-72 md:justify-between md:items-center '>
-
-                    <div className='flex items-center justify-center bg-(--background-color) h-16 w-16 mb-6 shadow-sm rounded-[50%]'>
-                        <img className='w-6 h-6' src="PersonalizedLearn (1).svg"/>
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        
-                        <p   className='font-bold text-[1.3rem] text-white lg:mt-2 p-1'>Personalized Learning</p>
-
-                        <p className='text-white text-[1rem] leading-relaxed opacity-90'>Offer tailored learning experiences through AI and machine learning to cater to individual student needs.</p>
-                       
-                    </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+            {[
+              { title: "Personalized Learning", color: "bg-[#4a90e2]", icon: "PersonalizedLearn (1).svg", desc: "Offer tailored learning experiences through AI and machine learning." },
+              { title: "Affordability", color: "bg-[#FF6289]", icon: "Affordability.svg", desc: "High-quality education at an affordable price point for everyone." },
+              { title: "Industry Partnerships", color: "bg-[#fcbf58]", icon: "IndustryPatner.svg", desc: "Collaborate with institutions to offer accredited certifications." },
+              { title: "Innovative Technology", color: "bg-[#44bfc3]", icon: "InnovativeTech.svg", desc: "Utilize cutting-edge tools to create immersive learning experiences." },
+              { title: "Responsive Support", color: "bg-[#77b05d]", icon: "InnovativeTech.svg", desc: "Exceptional assistance dedicated to students and educators." },
+              { title: "Analytics and Insights", color: "bg-[#7d78b1]", icon: "Analytics.svg", desc: "Detailed progress tracking and analytics to help students monitor performance." }
+            ].map((card, i) => (
+              <div key={i} className={`${card.color} p-10 rounded-[3rem] text-white text-left h-80 flex flex-col justify-between hover:scale-[1.03] transition-all shadow-xl`}>
+                <div className='bg-white/20 w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-md'>
+                  <img src={card.icon} alt="icon" className='w-8 h-8' />
                 </div>
-                {/* <!-- card 2 --> */}
-                <div className=' lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#FF6289] rounded-2xl lg:h-72 
-                md:h-72 md:w-72 h-72 w-72'>
-                    <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
-                        <img className='w-6 h-6' src="Affordability.svg"/>
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <p className='font-bold text-[1.3rem] text-white mt-2'>Affordability</p>
-
-                        <p className='text-white'>
-                        Provide high-quality education at an affordable price point, making it accessible to a broader audience.
-
-                        </p>
-                       
-                    </div>
+                <div>
+                  <h3 className='text-2xl font-black mb-3'>{card.title}</h3>
+                  <p className='text-sm font-medium opacity-90 leading-relaxed'>{card.desc}</p>
                 </div>
-                {/* <!-- card 3 --> */}
-                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#fcbf58] rounded-2xl *:md:h-72 md:w-72 h-72 w-72'>
-                    <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
-                        <img className='w-6 h-6' src="IndustryPatner.svg"/>
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <p  className='font-bold text-[1.3rem] text-white mt-2'>
-                        Industry Partnerships
-                        </p>
-                        <p  className='text-white'> Collaborate with well-known companies and institutions to offer accredited courses and certifications, adding credibility to your offerings.</p>
-                        
-                    </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- COMPANY LOGOS (Animated Section) --- */}
+      <section ref={sectionRef} className='py-32 bg-white text-center'>
+        <div className='max-w-6xl mx-auto px-6'>
+          <h2 className='text-4xl font-black text-slate-900 mb-12'>Trusted by the best</h2>
+          <p className='text-2xl md:text-3xl font-bold text-slate-500 tracking-tight leading-tight mb-20'>
+            Trusted by thousands of students in hundreds of universities in over <span className='text-[#5254f8]'>128 countries</span>.
+          </p>
+          <div className='grid grid-cols-3 md:grid-cols-5 gap-10 items-center justify-items-center opacity-40 grayscale'>
+            {logos.map((logo, index) => (
+              <img 
+                key={index} 
+                src={logo.src} 
+                className={`h-10 object-contain ${logo.p} transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
+                style={{ transitionDelay: `${index * 50}ms` }} 
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- REVIEWS SECTION --- */}
+      <section className='py-32 bg-gray-100 rounded-[5rem] mx-4 mb-20'>
+        <div className='max-w-7xl mx-auto px-6'>
+          <div className='text-center mb-20'>
+            <h2 className='text-4xl md:text-6xl font-black text-indigo-950 tracking-tighter mb-4'>What Students Say</h2>
+            <p className='text-xl text-indigo-900/60 font-bold'>Join 100,000+ users improving their productivity with TechFlow</p>
+          </div>
+
+          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+            {[
+              { name: "Shiham Mahroof", img: "gary.webp", text: "Great app. Easy to navigate and input documents. User interface was clever and intuitive." },
+              { name: "Jasmin S.", img: "r2.webp", text: "Hands down the best AI tool I have ever used. Saves me hours of time on any video or file." },
+              { name: "Kei Camba", img: "r3.webp", text: "Highly recommend for teachers. Support named Tommy walked me through everything with visuals." },
+              { name: "Benjamin Deprisco", img: "r5.webp", text: "Have been using Techflow for about a year. It gathers all the info and creates flashcards for you." },
+              { name: "Tom Paladin", img: "r6.webp", text: "Great application for graduate/doctoral level students. Used videos to transcribe and create insights." },
+              { name: "Shiham M.", img: "r4.webp", text: "Phenomenal customer service! They resolved my subscription issue the same day I reached out." }
+            ].map((review, i) => (
+              <div key={i} className='bg-white p-10 rounded-[3.5rem] shadow-2xl flex flex-col justify-between border border-white hover:-translate-y-2 transition-all duration-500'>
+                <p className='text-slate-600 font-medium leading-relaxed mb-10'>"{review.text}"</p>
+                <div className='flex items-center justify-between'>
+                  <div className='flex items-center gap-4'>
+                    <img src={review.img} className='w-12 h-12 rounded-full border-2 border-indigo-50' alt={review.name} />
+                    <p className='font-black text-indigo-900 text-sm'>{review.name}</p>
+                  </div>
+                  <img src="Frame.webp" className='h-6 opacity-30' alt="quote icon" />
                 </div>
-                {/* <!-- card 4 --> */}
-                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#44bfc3] rounded-2xl
-                md:h-72 md:w-72 h-72 w-72'>
-                    <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
-                        <img className='w-6 h-6' src="InnovativeTech.svg"/>
-                    </div>
-                    <div className='flex flex-col gap-4=2'>
-                        <p className='font-bold text-[1.3rem] text-white mt-2'> 
-                        Innovative Technology
-                        </p>
-
-                        <p className='text-white'> Utilize cutting-edge technology, such as augmented reality or virtual reality, to create immersive learning experiences.</p>
-                       
-                    </div>
-                </div>
-                {/* <!-- card 5 --> */}
-                <div className='lg:g-4 lg:p-8 md:p-6 g-4 p-8 r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#77b05d] rounded-2xl
-                md:h-72 md:w-72 h-72 w-72'>
-                    <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
-                        <img className='w-6 h-6' src="InnovativeTech.svg"/>
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <p className='font-bold text-[1.3rem] text-white mt-2'>
-                        Responsive Support
-                        </p>
-
-                        <p className='text-white'>
-                        Provide exceptional customer support and assistance to students and educators.
-                        </p>
-                       
-                        
-                    </div>
-                </div>
-                {/* <!-- card 6 --> */}
-                <div className='lg:g-4 lg:p-8 md:p-6  r-4 mt-[1.3rem] flex flex-col justify-center items-center bg-[#7d78b1] rounded-2xl md:h-72 md:w-72 h-72 w-72
-                '>
-                    <div  className='flex items-center justify-center bg-(--background-color) h-12 w-12 rounded-[50%]'>
-                        <img className='w-6 h-6' src="Analytics.svg"/>
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <p className='font-bold text-[1.3rem] text-white mt-2'> Analytics and Insights</p>
-
-                        
-                        
-                        <div className='text-white'>
-                            Offer detailed progress tracking and analytics to help students and teachers monitor performance and make data-driven decisions.
-                        </div>
-                    </div>
-                </div>
-            </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* --- MOBILE MENU --- */}
+      {isMenuOpen && (
+        <div className='fixed inset-0 bg-white z-[200] flex flex-col items-center justify-center gap-10 p-10'>
+          <button className='absolute top-8 right-8' onClick={() => setIsMenuOpen(false)}>
+            <img src="close.webp" className='w-10 h-10' alt="close" />
+          </button>
+          <nav className='flex flex-col items-center gap-8 text-3xl font-black text-slate-900 tracking-tighter'>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            <Link to="/pricing" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
+            <Link to="/blog" onClick={() => setIsMenuOpen(false)}>Blog</Link>
+            <Link to="/signup" className='bg-[#5254f8] text-white px-10 py-4 rounded-full text-xl' onClick={() => setIsMenuOpen(false)}>Join Now</Link>
+          </nav>
+        </div>
+      )}
     </div>
-
-
-
-    {/* company sections for */}
-
-    
-    <div ref={sectionRef} className='min-h-175 mt-5 flex items-center flex-col overflow-hidden'>
-      {/* Headlines */}
-      <p className={`text-3xl font-bold text-gray-700 text-center ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
-        Trusted by thousands of students in hundreds of universities and high schools
-      </p>
-      <p className={`text-3xl font-bold text-gray-700 text-center ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-        in over 128 countries around the world.
-      </p>
-
-      {/* Company Grid */}
-      <div className='grid md:grid-cols-3 grid-cols-1 lg:grid-cols-5 pl-20 mt-15'>
-        {logos.map((logo, index) => (
-          <img 
-            key={index}
-            src={logo.src} 
-            alt="logo" 
-            className={`h-13 m-10 ${logo.p} ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} 
-            style={{ animationDelay: `${0.3 + index * 0.05}s` }} 
-          />
-        ))}
-      </div>
-
-      {/* Compatible Section */}
-      <p className={`mt-10 font-bold text-gray-700 text-xl ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '1.2s' }}>
-        Compatible with
-      </p>
-
-      <div className='grid grid-cols-1  lg:grid-cols-3 lg:w-190  lg:mt-8 justify-center w-50 p-3 justify-items-center'>
-        {["i16.webp", "i17.webp", "i18.webp"].map((img, i) => (
-          <img 
-            key={i}
-            src={img} 
-            className={`h-10 ${i === 0 ? 'pl-9' : i === 1 ? 'p-2' : ''} ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} 
-            style={{ animationDelay: `${1.4 + i * 0.1}s` }} 
-          />
-        ))}
-      </div>
-    </div>
-  
-
-
-
-
-
-{/* review sections */}
-
-<div className='h-300 bg-gray-100  '>
-
-    <p className='font-semibold lg:text-4xl lg:px-154 lg:my-3 lg:pt-6 mask-radial-from-neutral-950 items-center flex justify-center'>Review</p>
-   
-   <div className='items-center lg:space-y-1 lg:mt-10 flex flex-col '>
-   <p className='items-center text-2xl text-indigo-900 font-bold lg:px-120'>Join 100,000+ users from across the globe</p>
-
-<p className='text-2xl text-indigo-900 font-bold lg:px-110'>who improve their knowledge and productivity with</p>
-<p className='text-3xl text-indigo-900 font-bold lg:px-160'>TechFLow</p>
-
-   </div>
-
-   
-{/* review photo section */}
-   <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 lg:h-250 gap-10'>
-    {/* card1 */}
-    <div className='bg-white pb-1 h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="gary.webp" alt="" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Shiham Mahroof</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p>Great app. <span className='font-bold'>Easy to navigate and input documents. User interface was clever and intuitive.</span> Appearance was sleek and smooth (highly attractive to older teens and young adults especially). Students with learning disabilities may need more time to adjust. But the company seems real interested in trying to develop this area. Hats off them. Regardless excellent future prospects on an already great app. Highly recommend.</p>
-        </div>
-
-    </div>
-
-
-{/* card2 */}
-
-<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="r2.webp" alt="not found" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Jasmin S.</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p>This is hands down the best AI tool I have ever used. There's a free trial but i just paid for the most expensive plan and it's so worth it. <span className='font-bold'>I can ask it any question and It tells me anything i need to know about any video or file.</span> - literally saves me hours of time.
-            It has completely transformed my workflow and literally saves me hours of productive time every day. I cannot imagine going back to my old study routine!"</p>
-        </div>
-
-    </div>
-
-
-
-
-{/* card3 */}
-<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="r3.webp" alt="" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Kei Camba</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p>I highly recommend their tools. <span className='font-bold'>Very helpful for a teacher that needs to create quizzes from video modules.</span>Good customer service too. Just look for their support named [Tommy], he can walk you through their products with some visuals .Just look for their support specialist named Tommy; he is a lifesaver and can walk you through their products with some great visuals. It has made my lesson planning so much more efficient!</p>
-        </div>
-
-    </div>
-
-
-
-{/* card4 */}
-<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="r4.webp" alt="" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Shiham Mahroof</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p>Probably one of the most useful AI services I've used. Not only that, but they have phenomenal customer service!  <span className='font-bold'>EI made a mistake with my subscription plan, and they resolved it the same day I reached out</span>  Highly recommend!
-            It is rare to find a company that cares this much about their users. I’ve already told my whole department about it. Highly recommend for anyone who needs reliable AI support!"
-
-</p>
-        </div>
-
-    </div>
-
-
-
-
-{/* card5 */}
-<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="r5.webp" alt="" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Benjamin Deprisco</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p> <span className='font-bold'>Have been using Techflow for about a year.</span>now and can honestly say that it has boosted my academic performance so much. It has many great features but my favourite would be the flashcards option. It gathers all the info from any document and creates flashcards for you to study from.
-            <span className='font-bold'> It's great when you're juggling 7 classes</span> 
-            and don't have time to write out flashcards yourself. Excited for whats next to come!</p>
-        </div>
-
-    </div>
-
-
-
-
-{/* card6 */}
-<div className='bg-white h-100 lg:w-95  lg:p-5 lg:ml-5 p-2 md:pd-1 rounded-4xl shadow-2xl'>
-        <div className='flex justify-between p-5'>
-        <div className='flex gap-4 items-center'>
-            <img src="r6.webp" alt="" className='h-15' />
-            <p className='text-indigo-700 font-bold'>Tom Paladin</p>
-            
-        </div>
-        <div className='flex justify-center  items-center'><img src="Frame.webp" alt="" className='h-8 ' /></div>
-
-        </div>
-
-
-
-
-        <div>
-
-            <p> <span className='font-bold'>Great application for graduate/doctoral level students in research</span> I used this app to help guide my research project. I used videos to transcribe to text, created qualitative surveys in which I used the responses to help create table charts, dissect themes, insights/findings. The best thing about this app is the AI chatbox where you can save your previous convos, but also you can upload images! 11/10 would recommend.</p>
-        </div>
-
-    </div>
-        
-
-
-    
-
-   </div>
-
- 
-
-
-</div>
-
-
-
-   
-
-   
-    
-</>
-  )
+  );
 };
 
-function App(){
-    return(
-        <Router>
-            <Routes> {/* When URL is "/", show the LandingPage */}
-                <Route path='/' element={<LandingPage/>}/>
-                <Route path='/ai-notes' element={<AiNotes/>}/>
-                <Route path='/ai-tutor' element={<AiNotes/>}/>
-                <Route path='/ai-quiz' element={<AiNotes/>}/>
-
-                <Route path='/ai-flashcards' element={<AiNotes/>}/>
-                <Route path='/signup' element={<SignUp/>}/>
-                <Route path='/login' element={<Login/>}/>
-                
-            </Routes>
-
-
-
-        </Router>
-
-
-
-
-    )
+// --- APP COMPONENT WITH UPDATED ROUTES ---
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/ai-notes' element={<AiNotes />} />
+        <Route path='/ai-tutor' element={<AiNotes />} />
+        <Route path='/ai-quiz' element={<AiNotes />} />
+        <Route path='/ai-flashcards' element={<AiNotes />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/pricing' element={<Pricing />} />
+        <Route path='/blog' element={<Blog />} />
+        <Route path='/about' element={<About />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
