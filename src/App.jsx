@@ -6,6 +6,9 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { useRef } from 'react';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 import AiNotes from './AiNotes';
+import AiTutor from './AiTutor';
+import AiQuiz from './AiQuiz';
+import AiFlashCards from './AiFlashcards';
 import{ BrowserRouter as Router, Routes ,Route ,Link} from 'react-router-dom';
 
 const LandingPage = ()=> {
@@ -70,26 +73,35 @@ const LandingPage = ()=> {
             
             
             '>
+                {/* ai notees */}
 
             <Link to="/ai-notes" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
             <h4 className="text-indigo-800 font-bold text-m">AI Notes</h4>
             <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Automatically turn your lectures into easy-to-follow notes.</p>
+            
             </Link>
 
-            <a href="#tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
+            {/* ai tutor */}
+
+            <Link to="/ai-tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
         <h4 className="text-indigo-800  font-bold text-m">AI Tutor</h4>
         <p className="text-(--dark-gray) text-s font-normal ">Instantly get clear answers from your study content.</p>
-      </a>
+      </Link>
 
-      <a href="#quizzes" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
+
+      {/* ai quiz */}
+
+      <Link to='/ai-quiz' className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
         <h4 className="text-indigo-800  font-bold text-m">AI Quizzes</h4>
         <p className="text-(--dark-gray) text-s font-normal ">Quickly generate quizzes from your materials to test understanding.</p>
-      </a>
+      </Link>
 
-      <a href="#flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
+      {/* ai flashcards */}
+
+      <Link to="/ai-flashcards" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
         <h4 className="text-indigo-800  font-bold text-m">AI Flashcards</h4>
         <p className="text-(--dark-gray) text-s font-normal ">Create personalized flashcards automatically to memorize faster.</p>
-      </a>
+      </Link>
 
             </div>
            </a>
@@ -684,12 +696,20 @@ function App(){
             <Routes> {/* When URL is "/", show the LandingPage */}
                 <Route path='/' element={<LandingPage/>}/>
                 <Route path='/ai-notes' element={<AiNotes/>}/>
+                <Route path='/ai-tutor' element={<AiTutor/>}/>
+                <Route path='/ai-quiz' element={<AiQuiz/>}/>
+
+                <Route path='/ai-flashcards' element={<AiFlashCards/>}/>
                 
             </Routes>
 
 
 
         </Router>
+
+
+
+
     )
 }
 
