@@ -1,13 +1,14 @@
-import { use, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+import AiNotes from './AiNotes';
+import{ BrowserRouter as Router, Routes ,Route ,Link} from 'react-router-dom';
 
-function App() {
+const LandingPage = ()=> {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -70,10 +71,10 @@ function App() {
             
             '>
 
-            <a href="#pro" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
+            <Link to="ai-notes" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
             <h4 className="text-indigo-800 font-bold text-m">AI Notes</h4>
             <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Automatically turn your lectures into easy-to-follow notes.</p>
-            </a>
+            </Link>
 
             <a href="#tutor" className="group/item p-2 rounded-lg hover:bg-indigo-50 transition-all">
         <h4 className="text-indigo-800  font-bold text-m">AI Tutor</h4>
@@ -675,6 +676,21 @@ function App() {
     
 </>
   )
+};
+
+function App(){
+    return(
+        <Router>
+            <Routes> {/* When URL is "/", show the LandingPage */}
+                <Route path='/' element={<LandingPage/>}/>
+                <Route path='/ai-notes' element={<AiNotes/>}/>
+                
+            </Routes>
+
+
+
+        </Router>
+    )
 }
 
 export default App
