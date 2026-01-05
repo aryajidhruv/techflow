@@ -71,7 +71,7 @@ const LandingPage = ()=> {
             
             '>
 
-            <Link to="ai-notes" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
+            <Link to="/ai-notes" className='rounded-lg p-2 hover:bg-indigo-50  text-m transition-all'>
             <h4 className="text-indigo-800 font-bold text-m">AI Notes</h4>
             <p className="text-(--dark-gray) text-s font-normal leading-relaxed">Automatically turn your lectures into easy-to-follow notes.</p>
             </Link>
