@@ -329,8 +329,8 @@ function App() {
 
 
 
-<div  className='text-center py-10 bg-(--light-gray) w-full px-6 flex'>
-        <div className='w-200 mx-auto px-8 py-0 '>
+<div  className='text-center py-10 bg-(--light-gray) w-full px-6 flex justify-center'>
+        <div className='w-200 mx-auto px-8 py-0 flex flex-col justify-center '>
             <div className='flex flex-col gap-4 mb-10'>
                 <h2 className='text-3xl md:text-[2.5rem] font-bold'>
                     Our competitive advantage
@@ -341,7 +341,7 @@ function App() {
             </div>
             
             <div className='grid gap-8  grid-cols-1 md:grid-col-2 lg:grid-cols-2 mt-[1.3rem]
-            w-full bg-gray'>
+            w-full bg-gray md:justify-center items-center justify-items-center'>
               
                 {/* <!-- card 1 --> */}
                 <div className='lg:g-4 lg:p-8 md:p-8 r-4 flex flex-col items-center bg-[#4a90e2] rounded-2xl  mt-[1.3rem] lg:h-72 max-w-6xl md:h-72 md:w-72 h-72 w-72 md:justify-between md:items-center '>
@@ -428,9 +428,7 @@ function App() {
                     <div className='flex flex-col gap-2'>
                         <p className='font-bold text-[1.3rem] text-white mt-2'> Analytics and Insights</p>
 
-                        <p className='text-white'>
-                        Offer detailed progress tracking and analytics to help students and teachers monitor performance and make data-driven decisions
-                        </p>
+                        
                         
                         <div className='text-white'>
                             Offer detailed progress tracking and analytics to help students and teachers monitor performance and make data-driven decisions.
@@ -473,7 +471,7 @@ function App() {
         Compatible with
       </p>
 
-      <div className='grid grid-cols-1  lg:grid-cols-3 lg:w-190 lg: pl-20  lg:mt-8 justify-center'>
+      <div className='grid grid-cols-1  lg:grid-cols-3 lg:w-190  lg:mt-8 justify-center w-50 p-3 justify-items-center'>
         {["i16.webp", "i17.webp", "i18.webp"].map((img, i) => (
           <img 
             key={i}
