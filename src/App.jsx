@@ -6,10 +6,11 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { useRef } from 'react';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 import AiNotes from './AiNotes';
-import AiTutor from './AiTutor';
-import AiQuiz from './AiQuiz';
-import AiFlashcards from './AiFlashcards';
+import SignUp from './Signup';
+import Login from './Login';
+
 import{ BrowserRouter as Router, Routes ,Route ,Link} from 'react-router-dom';
+
 
 const LandingPage = ()=> {
 
@@ -696,10 +697,12 @@ function App(){
             <Routes> {/* When URL is "/", show the LandingPage */}
                 <Route path='/' element={<LandingPage/>}/>
                 <Route path='/ai-notes' element={<AiNotes/>}/>
-                <Route path='/ai-tutor' element={<AiTutor/>}/>
-                <Route path='/ai-quiz' element={<AiQuiz/>}/>
+                <Route path='/ai-tutor' element={<AiNotes/>}/>
+                <Route path='/ai-quiz' element={<AiNotes/>}/>
 
-                <Route path='/ai-flashcards' element={<AiFlashcards/>}/>
+                <Route path='/ai-flashcards' element={<AiNotes/>}/>
+                <Route path='/signup' element={<SignUp/>}/>
+                <Route path='/login' element={<Login/>}/>
                 
             </Routes>
 
