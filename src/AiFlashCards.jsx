@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AiFlashCards = () => {
+const AiFlashcards = () => {
   return (
     <div className="min-h-screen bg-green-50 p-10">
       <h1 className="text-4xl font-bold text-indigo-800">AI Flashcards</h1>
@@ -10,4 +10,4 @@ const AiFlashCards = () => {
   );
 };
 
-export default AiFlashCards; // This must match your import name
+export default AiFlashcards; // This must match your import name

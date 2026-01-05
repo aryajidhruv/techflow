@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 import AiNotes from './AiNotes';
 import AiTutor from './AiTutor';
 import AiQuiz from './AiQuiz';
-import AiFlashCards from './AiFlashcards';
+import AiFlashcards from './AiFlashcards';
 import{ BrowserRouter as Router, Routes ,Route ,Link} from 'react-router-dom';
 
 const LandingPage = ()=> {
@@ -699,7 +699,7 @@ function App(){
                 <Route path='/ai-tutor' element={<AiTutor/>}/>
                 <Route path='/ai-quiz' element={<AiQuiz/>}/>
 
-                <Route path='/ai-flashcards' element={<AiFlashCards/>}/>
+                <Route path='/ai-flashcards' element={<AiFlashcards/>}/>
                 
             </Routes>
 
