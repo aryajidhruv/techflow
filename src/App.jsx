@@ -9,6 +9,14 @@ import Pricing from './Pricing';
 import Blog from './Blog';
 import About from './About';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showPdf, setShowPdf] = useState(true);
@@ -399,18 +407,47 @@ const LandingPage = () => {
       </section>
 
       {/* --- MOBILE MENU --- */}
-      {isMenuOpen && (
-        <div className='fixed inset-0 bg-white z-[200] flex flex-col items-center justify-center gap-10 p-10'>
-          <button className='absolute top-8 right-8' onClick={() => setIsMenuOpen(false)}>
-            <img src="close.webp" className='w-10 h-10' alt="close" />
-          </button>
-          <nav className='flex flex-col items-center gap-8 text-3xl font-black text-slate-900 tracking-tighter'>
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link to="/pricing" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
-            <Link to="/signup" className='bg-[#5254f8] text-white px-10 py-4 rounded-full text-xl' onClick={() => setIsMenuOpen(false)}>Join Now</Link>
-          </nav>
+      {/* --- MOBILE MENU --- */}
+{isMenuOpen && (
+  <div className='fixed inset-0 bg-white z-[200] flex flex-col p-8 animate-in fade-in zoom-in-95 duration-300'>
+    {/* Close Button Header */}
+    <div className='flex justify-between items-center mb-12'>
+      <div className='flex items-center gap-2'>
+        <img src="StudySyn.svg" alt="logo" className='h-8' />
+        <span className='text-xl font-black text-slate-900'>TechFlow</span>
+      </div>
+      <button onClick={() => setIsMenuOpen(false)}>
+        <img src="close.webp" className='w-8 h-8' alt="close" />
+      </button>
+    </div>
+
+    {/* Navigation Links */}
+    <nav className='flex flex-col gap-6 overflow-y-auto'>
+      <Link to="/" onClick={() => setIsMenuOpen(false)} className='text-2xl font-black text-slate-900 border-b border-slate-50 pb-2'>Home</Link>
+      
+      {/* Features Sub-Group */}
+      <div className='flex flex-col gap-4'>
+        <p className='text-xs font-black text-slate-400 uppercase tracking-widest'>Features</p>
+        <div className='grid grid-cols-1 gap-3 ml-2'>
+          <Link to="/ai-notes" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>📝 AI Notes</Link>
+          <Link to="/ai-tutor" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>🤖 AI Tutor</Link>
+          <Link to="/ai-quiz" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>❓ AI Quizzes</Link>
+          <Link to="/ai-flashcards" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>🃏 AI Flashcards</Link>
         </div>
-      )}
+      </div>
+
+      <Link to="/pricing" onClick={() => setIsMenuOpen(false)} className='text-2xl font-black text-slate-900 border-b border-slate-50 pb-2'>Pricing</Link>
+      <Link to="/blog" onClick={() => setIsMenuOpen(false)} className='text-2xl font-black text-slate-900 border-b border-slate-50 pb-2'>Blog</Link>
+      <Link to="/about" onClick={() => setIsMenuOpen(false)} className='text-2xl font-black text-slate-900 border-b border-slate-50 pb-2'>About</Link>
+      
+      {/* Auth Buttons for Mobile */}
+      <div className='flex flex-col gap-4 mt-8'>
+        <Link to="/login" onClick={() => setIsMenuOpen(false)} className='w-full py-4 text-center font-bold text-slate-600 border-2 border-slate-100 rounded-2xl'>Log In</Link>
+        <Link to="/signup" onClick={() => setIsMenuOpen(false)} className='w-full py-4 text-center font-black text-white bg-[#5254f8] rounded-2xl shadow-lg shadow-indigo-100'>Join TechFlow</Link>
+      </div>
+    </nav>
+  </div>
+)}
     </div>
   );
 };
