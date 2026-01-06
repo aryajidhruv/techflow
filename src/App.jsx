@@ -138,7 +138,7 @@ const LandingPage = () => {
                     <span className='text-slate-800 font-black text-[10px] tracking-tight'>Earth Wiki Session</span>
                   </div>
                 </div>
-                <Link to='/login' className='bg-[#5254f8] text-white px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider'>+ New Session</Link>
+                <Link to='/signup' className='bg-[#5254f8] text-white px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider'>+ New Session</Link>
               </div>
 
               {/* Tabs with onClick state change */}
@@ -316,7 +316,7 @@ const LandingPage = () => {
                         className='bg-transparent outline-none w-full text-[10px] text-slate-600 font-medium placeholder:italic placeholder:text-slate-400' 
                         placeholder='Ask AI assistant...' 
                       />
-                      <Link to='/Login' className='bg-[#5254f8] w-7 h-7 rounded-lg flex items-center justify-center text-white shadow-lg'>
+                      <Link to='/signup' className='bg-[#5254f8] w-7 h-7 rounded-lg flex items-center justify-center text-white shadow-lg'>
                         ➹
                       </Link>
                     </div>
