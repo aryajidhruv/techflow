@@ -55,7 +55,7 @@ const LandingPage = () => {
           <Link to="/" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Home</Link>
           <div className='group relative cursor-pointer text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>
             Features
-            <div className='absolute hidden group-hover:grid grid-cols-2 gap-4 w-[500px] p-6 rounded-2xl bg-white shadow-2xl border border-slate-100 -translate-x-1/4 top-full mt-2'>
+            <div className='absolute hidden group-hover:grid grid-cols-2 gap-4 w-[500px] p-6 rounded-2xl bg-white shadow-2xl border border-slate-100 -translate-x-1/4 top-full mt-0'>
               <Link to="/ai-notes" className='p-3 rounded-lg hover:bg-indigo-50'>
                 <h4 className="text-indigo-800 font-bold">AI Notes</h4>
                 <p className="text-slate-500 text-xs font-normal">Lectures to notes instantly.</p>
