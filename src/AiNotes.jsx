@@ -124,49 +124,67 @@ const AiNotes = () => {
 
           {/* PHASE C: COMPLETED (WORKSPACE) */}
           {status === 'completed' && (
-            <div className="flex gap-8 h-full max-w-[1400px] mx-auto animate-in fade-in slide-in-from-right-8 duration-700">
-              {/* Note Display Area */}
-              <div className="flex-1 bg-white rounded-[2rem] border border-gray-100 shadow-sm p-10 overflow-y-auto custom-scrollbar">
-                <div className='flex items-center justify-between mb-8 pb-4 border-b border-gray-50'>
-                  <h1 className="text-3xl font-black text-gray-900">Study Guide</h1>
-                  <button onClick={() => setStatus('idle')} className="text-xs font-bold text-indigo-600 bg-indigo-50 px-4 py-2 rounded-full hover:bg-indigo-100">Upload New</button>
-                </div>
-                
-                <div className="prose prose-indigo max-w-none space-y-6">
-                  <section>
-                    <h3 className="text-xl font-bold text-indigo-600 mb-2">1. Executive Summary</h3>
-                    <p className="text-gray-600 leading-relaxed">Based on your upload, this document focuses on the core principles of [Document Subject]. Key takeaways include the relationship between system architecture and user performance.</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-indigo-600 mb-2">2. Key Concepts</h3>
-                    <ul className="list-disc ml-5 text-gray-600 space-y-2">
-                      <li><strong>Primary Goal:</strong> Efficient data retrieval and management.</li>
-                      <li><strong>Structural Integrity:</strong> Maintaining balance between speed and security.</li>
-                      <li><strong>User Impact:</strong> How these changes affect end-to-level navigation.</li>
-                    </ul>
-                  </section>
-                </div>
-              </div>
+  <div className="flex flex-col lg:flex-row gap-6 h-full max-w-[1400px] mx-auto animate-in fade-in slide-in-from-right-8 duration-700">
+    
+    {/* Note Display Area - Now expands to full width on mobile */}
+    <div className="flex-1 bg-white rounded-[1.5rem] md:rounded-[2rem] border border-gray-100 shadow-sm p-6 md:p-10 overflow-y-auto custom-scrollbar">
+      <div className='flex items-center justify-between mb-6 md:mb-8 pb-4 border-b border-gray-50'>
+        <h1 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight">Study Guide</h1>
+        <button 
+          onClick={() => setStatus('idle')} 
+          className="text-[10px] md:text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-2 md:px-4 md:py-2 rounded-full hover:bg-indigo-100 shrink-0"
+        >
+          Upload New
+        </button>
+      </div>
+      
+      <div className="prose prose-indigo max-w-none space-y-6">
+        <section>
+          <h3 className="text-lg md:text-xl font-bold text-indigo-600 mb-2">1. Executive Summary</h3>
+          <p className="text-sm md:text-gray-600 leading-relaxed text-gray-600">
+            Based on your upload, this document focuses on the core principles of {fileName}. 
+            Key takeaways include the relationship between system architecture and user performance.
+          </p>
+        </section>
+        <section>
+          <h3 className="text-lg md:text-xl font-bold text-indigo-600 mb-2">2. Key Concepts</h3>
+          <ul className="list-disc ml-5 text-sm md:text-gray-600 text-gray-600 space-y-2">
+            <li><strong>Primary Goal:</strong> Efficient data retrieval and management.</li>
+            <li><strong>Structural Integrity:</strong> Maintaining balance between speed and security.</li>
+            <li><strong>User Impact:</strong> How these changes affect navigation.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
 
-              {/* Chat Sidebar */}
-              <div className="w-80 flex flex-col bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
-                <div className="p-4 bg-gray-50/50 border-b border-gray-100">
-                  <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">AI Tutor</h4>
-                </div>
-                <div className="flex-1 p-4 space-y-4 overflow-y-auto">
-                  <div className="bg-indigo-50 p-3 rounded-2xl rounded-bl-none text-[13px] text-indigo-900 font-medium">
-                    I've finished your notes! What would you like to clarify?
-                  </div>
-                </div>
-                <div className="p-4 border-t border-gray-100">
-                  <div className="relative">
-                    <input type="text" placeholder="Ask a question..." className="w-full bg-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                    <button className="absolute right-2 top-1.5 bg-indigo-600 text-white w-7 h-7 rounded-lg flex items-center justify-center shadow-md">➹</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+    {/* Chat Sidebar - Now moves below the notes on mobile */}
+    <div className="w-full lg:w-80 flex flex-col bg-white rounded-[1.5rem] md:rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden min-h-[400px] lg:h-full">
+      <div className="p-4 bg-gray-50/50 border-b border-gray-100 flex justify-between items-center">
+        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">AI Tutor</h4>
+        <span className="lg:hidden text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded">Active</span>
+      </div>
+      
+      <div className="flex-1 p-4 space-y-4 overflow-y-auto max-h-[300px] lg:max-h-none">
+        <div className="bg-indigo-50 p-3 rounded-2xl rounded-bl-none text-[13px] text-indigo-900 font-medium">
+          I've finished your notes! What would you like to clarify?
+        </div>
+      </div>
+
+      <div className="p-4 border-t border-gray-100 mt-auto">
+        <div className="relative">
+          <input 
+            type="text" 
+            placeholder="Ask a question..." 
+            className="w-full bg-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+          />
+          <button className="absolute right-2 top-1.5 bg-indigo-600 text-white w-7 h-7 rounded-lg flex items-center justify-center shadow-md hover:bg-indigo-700 transition-colors">
+            ➹
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
         </div>
       </main>
