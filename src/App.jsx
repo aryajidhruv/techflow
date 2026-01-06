@@ -61,7 +61,7 @@ const LandingPage = () => {
 
         <nav className='hidden md:flex gap-8 items-center font-bold'>
           <Link to="/" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Home</Link>
-          <div className='group relative cursor-pointer text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>
+          <button className='group relative cursor-pointer text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>
             Features
             <div className='absolute hidden group-hover:grid grid-cols-2 gap-4 w-[500px] p-6 rounded-2xl bg-white shadow-2xl border border-slate-100 -translate-x-1/4 top-full mt-0'>
               <Link to="/ai-notes" className='p-3 rounded-lg hover:bg-indigo-50'>
@@ -81,7 +81,7 @@ const LandingPage = () => {
                 <p className="text-slate-500 text-xs font-normal">Master concepts with smart cards.</p>
               </Link>
             </div>
-          </div>
+          </button>
           <Link to="/pricing" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Pricing</Link>
           <Link to="/blog" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>Blog</Link>
           <Link to="/about" className='text-sm text-slate-600 hover:text-[#5254f8] transition-colors'>About</Link>
@@ -427,12 +427,13 @@ const LandingPage = () => {
       
       {/* Features Sub-Group */}
       <div className='flex flex-col gap-4'>
-        <p className='text-xs font-black text-slate-400 uppercase tracking-widest'>Features</p>
-        <div className='grid grid-cols-1 gap-3 ml-2'>
-          <Link to="/ai-notes" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>📝 AI Notes</Link>
-          <Link to="/ai-tutor" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>🤖 AI Tutor</Link>
-          <Link to="/ai-quiz" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>❓ AI Quizzes</Link>
-          <Link to="/ai-flashcards" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-indigo-600'>🃏 AI Flashcards</Link>
+        <p className='text-xl font-black text-black uppercase tracking-widest'>Features</p>
+        <div className='grid grid-cols-1 gap-3 ml-2  w-40 shadow-indigo-600 rounded-2xl'>
+         
+          <Link to="/ai-tutor" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-green-900 shadow-2xs shadow-amber-300 w-25'>🤖 AI Tutor</Link>
+          <Link to="/ai-notes" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-green-900 shadow-2xs shadow-amber-300 w-27'>📝 AI Notes</Link>
+          <Link to="/ai-quiz" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-green-900 shadow-2xs shadow-amber-300 w-30'>❓ AI Quizzes</Link>
+          <Link to="/ai-flashcards" onClick={() => setIsMenuOpen(false)} className='text-lg font-bold text-green-900 shadow-2xs shadow-amber-300 w-37'>🃏 AI Flashcards</Link>
         </div>
       </div>
 
