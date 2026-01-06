@@ -308,9 +308,9 @@ const LandingPage = () => {
                         className='bg-transparent outline-none w-full text-[10px] text-slate-600 font-medium placeholder:italic placeholder:text-slate-400' 
                         placeholder='Ask AI assistant...' 
                       />
-                      <button className='bg-[#5254f8] w-7 h-7 rounded-lg flex items-center justify-center text-white shadow-lg'>
+                      <Link to='/Login' className='bg-[#5254f8] w-7 h-7 rounded-lg flex items-center justify-center text-white shadow-lg'>
                         ➹
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
